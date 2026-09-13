@@ -53,5 +53,6 @@ void matching_engine_separates_symbols() {
 int main() {
     price_time_priority();
     market_order_does_not_rest();
+    cancel_and_modify();
     std::cout << "all tests passed\n";
 }
