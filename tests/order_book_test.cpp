@@ -50,10 +50,31 @@ void matching_engine_separates_symbols() {
     CHECK(engine.find_book("NVDA")->best_ask() == 20000);
 }
 
+void rejects_bad_orders() {
+    OrderBook book;
+    bool threw = false;
+    try {
+        book.submit({1, Side::Buy, OrderType::Limit, 0, 10000});
+    } catch (const std::invalid_argument&) {
+        threw = true;
+    }
+    CHECK(threw);
+
+    book.submit({2, Side::Buy, OrderType::Limit, 5, 10000});
+    threw = false;
+    try {
+        book.submit({2, Side::Sell, OrderType::Limit, 5, 10100});
+    } catch (const std::invalid_argument&) {
+        threw = true;
+    }
+    CHECK(threw);
+}
+
 int main() {
     price_time_priority();
     market_order_does_not_rest();
     cancel_and_modify();
     matching_engine_separates_symbols();
+    rejects_bad_orders();
     std::cout << "all tests passed\n";
 }
