@@ -23,3 +23,6 @@ target_link_libraries(engine_bench PRIVATE engine)
 
 include(CTest)
 add_test(NAME engine_tests COMMAND engine_tests)
+
+add_executable(engine_latency bench/latency.cpp)
+target_link_libraries(engine_latency PRIVATE engine)

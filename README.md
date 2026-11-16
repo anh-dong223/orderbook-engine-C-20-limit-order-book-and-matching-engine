@@ -62,3 +62,22 @@ quote <symbol>
 ```
 
 The benchmark uses a fixed random seed and prints total elapsed time and orders per second. It is meant for quick comparisons between builds, not as an exchange-grade latency test.
+
+## Latency results
+
+`engine_latency` runs the same workload as `engine_bench` but times each `submit` call and prints percentiles.
+
+```sh
+./build/engine_latency 1000000
+```
+
+Results from a Release build (AppleClang 15, `-O3`) on an Apple M1, 1M orders:
+
+| Metric | Result |
+| --- | --- |
+| Throughput | ~4.0M orders/s |
+| Submit latency p50 | 166 ns |
+| Submit latency p99 | ~720 ns |
+| Submit latency p99.9 | ~2.0 µs |
+
+Numbers vary with hardware and system load; rerun both binaries to compare.
